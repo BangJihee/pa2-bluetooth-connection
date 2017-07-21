@@ -7,7 +7,7 @@
 
 from bluetooth import *
 
-server_sock=BluetoothSocket( RFCOMM )
+server_sock = BluetoothSocket(RFCOMM)
 server_sock.bind(("", PORT_ANY))
 server_sock.listen(1)
 
@@ -34,7 +34,9 @@ try:
         if len(data) == 0:
             break
         print "received [%s]" % data
-        client_sock.send("received [%s]\n" % data)
+        sent = client_sock.send("received [%s]\n" % data)
+        if sent == 0:
+            raise RuntimeError("socket connection broken")
 except IOError:
     pass
 
