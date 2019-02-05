@@ -23,25 +23,25 @@ advertise_service(server_sock,
 #                  protocols = [ OBEX_UUID ]
                   )
 
-print "Waiting for connection on RFCOMM channel %d" % port
+print("Waiting for connection on RFCOMM channel {}".format(port))
 
 client_sock, client_info = server_sock.accept()
-print "Accepted connection from ", client_info
+print("Accepted connection from {}".format(client_info))
 
 try:
     while True:
         data = client_sock.recv(1024)
         if len(data) == 0:
             break
-        print "received [%s]" % data
-        sent = client_sock.send("received [%s]\n" % data)
+        print("received [{}]".format(data))
+        sent = client_sock.send("received [{}]".format(data))
         if sent == 0:
             raise RuntimeError("socket connection broken")
 except IOError:
     pass
 
-print "disconnected"
+print("disconnected")
 
 client_sock.close()
 server_sock.close()
-print "all done"
+print("all done")
